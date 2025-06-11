@@ -11,8 +11,16 @@ permissions:
   security-events: write
   actions: read
 
-
 jobs:
+  # Print the commit message of the last commit
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print commit message
+        run: echo "Commit: ${{ github.event.workflow_run.head_commit.message }}"
+
+  # Docker image build and push to Dockerhub
   docker:
     runs-on: ubuntu-latest
     steps:
@@ -35,47 +43,3 @@ jobs:
           tags: |
               ${{ vars.DOCKERHUB_USERNAME }}/calculator:${{ github.sha }},
               ${{ vars.DOCKERHUB_USERNAME }}/calculator:latest
-
-
-
-# jobs:
-#   build_image:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       # Checkout code
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-      
-#       # Python installation
-#       - name: Python ${{ matrix.python-version }} installation
-#         uses: actions/setup-python@v5
-#         with:
-#           python-version: ${{ matrix.python-version }}
-
-#       # Install dependencies
-#       - name: Install dependencies
-#         run: |
-#           python -m pip install --upgrade pip
-#           pip install flake8 pytest
-
-
-#   push_image:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       # Checkout code
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-      
-#       # Python installation
-#       - name: Python ${{ matrix.python-version }} installation
-#         uses: actions/setup-python@v5
-#         with:
-#           python-version: ${{ matrix.python-version }}
-
-#       # Install dependencies
-#       - name: Install dependencies
-#         run: |
-#           python -m pip install --upgrade pip
-#           pip install flake8 pytest
