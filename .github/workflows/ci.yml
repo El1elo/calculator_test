@@ -1,4 +1,4 @@
-name: Calculator app
+name: CI
 
 on:
   push:
