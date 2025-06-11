@@ -1,10 +1,10 @@
 name: CD
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_run:
+    workflows: ["CI"]  # Name of our CI workflow
+    types:
+      - completed # Only run if the CI pipeline has completed
 
 permissions:
   contents: read
@@ -32,8 +32,9 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ DOCKERHUB_USERNAME }}/calculator:${{ github.sha }}
-              # ${{ DOCKERHUB_USERNAME }}/calculator:latest
+          tags: |
+              ${{ vars.DOCKERHUB_USERNAME }}/calculator:${{ github.sha }},
+              ${{ vars.DOCKERHUB_USERNAME }}/calculator:latest
 
 
 
