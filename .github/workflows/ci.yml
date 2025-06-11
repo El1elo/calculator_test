@@ -33,10 +33,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
 
+      - name: Lint code with flake8
+        run: flake8 calculator/
+
       - name: Test code
-        run: |
-          pytest tests/
-          flake8 calculator/
+        run: pytest tests/
+
     
   
 #   trivy-scan:
