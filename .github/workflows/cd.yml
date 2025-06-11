@@ -12,13 +12,13 @@ permissions:
   actions: read
 
 jobs:
-  # Print the commit message of the last commit
-  deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print commit message
-        run: echo "Commit: ${{ github.event.workflow_run.head_commit.message }}"
+  # # Print the commit message of the last commit
+  # deploy:
+  #   if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Print commit message
+  #       run: echo "Commit: ${{ github.event.workflow_run.head_commit.message }}"
 
   # Docker image build and push to Dockerhub
   docker:
